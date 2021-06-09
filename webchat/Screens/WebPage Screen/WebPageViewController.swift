@@ -16,7 +16,6 @@ class WebPageViewController: ContentViewController<WebPageView> {
     
     private let webPageConfig: WebPageConfig
     
-    var webPageResponseToIOS: ((Bool) -> Void)?
     var transitions = Transitions()
     
     init(config: WebPageConfig) {
@@ -31,8 +30,6 @@ class WebPageViewController: ContentViewController<WebPageView> {
     override func setupData() {
         super.setupData()
         
-        title = "Web Page"
-        
         contentView.registerDelegatesForWebView { [weak self] webView in
             guard let self = self else { return }
             webView.configuration.userContentController.add(self, name: self.webPageConfig.handlerName)
@@ -41,6 +38,7 @@ class WebPageViewController: ContentViewController<WebPageView> {
         contentView.setupURLForWebView(webPageConfig.url)
         
         contentView.closeButtonAction = transitions.close
+        contentView.closeButtonTitle = L10n.Alert.Action.close
     }
 }
 
@@ -56,8 +54,10 @@ private extension WebPageViewController {
             $0 += "\($1.key) - \($1.value)"
         }
         
-        let alert = UIAlertController(title: "'\(message.name)' Received", message: alertMessage ?? "null", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        let alert = UIAlertController(title: L10n.WebPage.Alert.MessageReceived.title(message.name),
+                                      message: alertMessage ?? "null",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.Alert.Action.ok, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }

@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  webchat
+
+  Created by Artsiom Sadyryn on 9.06.21.
+  
+*/
+
+"alert.action.ok" = "OK";
+"alert.action.close" = "Close";
+
+"error.open_web_page.title" = "Open Web Page Failed";
+"error.open_web_page.message.wrong_url" = "Wrong URL";
+"error.open_web_page.message.https_missing" = "https in URL is missing";
+"error.open_web_page.message.empty_handler_name" = "Empty handler name";
+
+"home.button.open_web_page" = "Open Web Page";
+"home.alert.enter_web_page_data.title" = "Enter web page config";
+"home.alert.enter_web_page_data.placeholder.url" = "https://google.com";
+"home.alert.enter_web_page_data.placeholder.handler_name" = "Enter JS handler name";
+"home.alert.enter_web_page_data.action.open_web_page" = "Open web page";
+
+"web_page.alert.message_received.title" = "'%@' received";

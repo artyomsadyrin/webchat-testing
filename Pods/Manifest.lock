@@ -1,14 +1,17 @@
 PODS:
   - Model (0.1.0)
   - SnapKit (5.0.1)
+  - SwiftGen (6.4.0)
 
 DEPENDENCIES:
   - Model (from `https://github.com/artyomsadyrin/Model.git`, branch `master`)
   - SnapKit
+  - SwiftGen
 
 SPEC REPOS:
   trunk:
     - SnapKit
+    - SwiftGen
 
 EXTERNAL SOURCES:
   Model:
@@ -23,7 +26,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Model: 6e16ae785beaada9952d42a90a1c0e829af5c50d
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
 
-PODFILE CHECKSUM: 26d4999762722e1d154d73627a64d5eb87042100
+PODFILE CHECKSUM: 9516c79ac38b4bdff70c9b30da00fb2695ff0e11
 
 COCOAPODS: 1.10.1

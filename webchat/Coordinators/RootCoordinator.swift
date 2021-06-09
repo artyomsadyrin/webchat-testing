@@ -19,10 +19,6 @@ private extension RootCoordinator {
     func showWebPageScreen(config: WebPageConfig) {
         let viewController = HomeAssembly.makeWebPageScreen(config: config)
         
-        viewController.webPageResponseToIOS = { [weak self] success in
-            
-        }
-        
         viewController.transitions.close = { [weak self] in
             self?.dismissModalController()
         }

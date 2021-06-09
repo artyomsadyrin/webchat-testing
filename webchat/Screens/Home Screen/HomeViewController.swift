@@ -24,23 +24,23 @@ final class HomeViewController: ContentViewController<HomeView> {
         contentView.openWebPageAction = { [weak self] in
             self?.enterWebPageConfigValues()
         }
-        contentView.openWebPageButtonTitle = "Open Web Page"
+        contentView.openWebPageButtonTitle = L10n.Home.Button.openWebPage
     }
 }
 
 private extension HomeViewController {
     func enterWebPageConfigValues() {
-        let alert = UIAlertController(title: "Enter web page config", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: L10n.Home.Alert.EnterWebPageData.title, message: nil, preferredStyle: .alert)
         
         alert.addTextField { textField in
-            textField.placeholder = "https://google.com"
+            textField.placeholder = L10n.Home.Alert.EnterWebPageData.Placeholder.url
         }
         
         alert.addTextField { textField in
-            textField.placeholder = "Enter JS handler name"
+            textField.placeholder = L10n.Home.Alert.EnterWebPageData.Placeholder.handlerName
         }
         
-        alert.addAction(UIAlertAction(title: "Open web page", style: .default, handler: { [weak self] _ in
+        alert.addAction(UIAlertAction(title: L10n.Home.Button.openWebPage, style: .default, handler: { [weak self] _ in
             let urlTextField = alert.textFields![0]
             let handlerTextField = alert.textFields![1]
             
@@ -67,8 +67,8 @@ private extension HomeViewController {
     }
     
     func showErrorAlert(error: OpenWebPageErrors) {
-        let alert = UIAlertController(title: "Open Web Page Failed", message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        let alert = UIAlertController(title: L10n.Error.OpenWebPage.title, message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: L10n.Alert.Action.ok, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }
@@ -80,14 +80,16 @@ private enum OpenWebPageErrors: Error {
 }
 
 extension OpenWebPageErrors: LocalizedError {
+    private typealias Texts = L10n.Error.OpenWebPage.Message
+    
     var errorDescription: String? {
         switch self {
         case .httpsInURLMissing:
-            return NSLocalizedString("https in URL is missing", comment: "")
+            return NSLocalizedString(Texts.httpsMissing, comment: "")
         case .wrongURL:
-            return NSLocalizedString("Wrong URL", comment: "")
+            return NSLocalizedString(Texts.wrongUrl, comment: "")
         case .wrongHandlerName:
-            return NSLocalizedString("Empty handler name", comment: "")
+            return NSLocalizedString(Texts.emptyHandlerName, comment: "")
         }
     }
 }
