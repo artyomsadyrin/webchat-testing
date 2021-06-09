@@ -13,6 +13,8 @@ internal enum L10n {
 
   internal enum Alert {
     internal enum Action {
+      /// Cancel
+      internal static let cancel = L10n.tr("Localizable", "alert.action.cancel")
       /// Close
       internal static let close = L10n.tr("Localizable", "alert.action.close")
       /// OK
@@ -21,6 +23,10 @@ internal enum L10n {
   }
 
   internal enum Error {
+    internal enum Message {
+      /// Something went wrong. Please contact the developer.
+      internal static let unknown = L10n.tr("Localizable", "error.message.unknown")
+    }
     internal enum OpenWebPage {
       /// Open Web Page Failed
       internal static let title = L10n.tr("Localizable", "error.open_web_page.title")
@@ -29,6 +35,8 @@ internal enum L10n {
         internal static let emptyHandlerName = L10n.tr("Localizable", "error.open_web_page.message.empty_handler_name")
         /// https in URL is missing
         internal static let httpsMissing = L10n.tr("Localizable", "error.open_web_page.message.https_missing")
+        /// Local page not found
+        internal static let localPageNotFound = L10n.tr("Localizable", "error.open_web_page.message.local_page_not_found")
         /// Wrong URL
         internal static let wrongUrl = L10n.tr("Localizable", "error.open_web_page.message.wrong_url")
       }
@@ -41,8 +49,8 @@ internal enum L10n {
         /// Enter web page config
         internal static let title = L10n.tr("Localizable", "home.alert.enter_web_page_data.title")
         internal enum Action {
-          /// Open web page
-          internal static let openWebPage = L10n.tr("Localizable", "home.alert.enter_web_page_data.action.open_web_page")
+          /// Open
+          internal static let `open` = L10n.tr("Localizable", "home.alert.enter_web_page_data.action.open")
         }
         internal enum Placeholder {
           /// JS handler name to listen
@@ -55,7 +63,9 @@ internal enum L10n {
       }
     }
     internal enum Button {
-      /// Open Web Page
+      /// Open Local Page
+      internal static let openLocalPage = L10n.tr("Localizable", "home.button.open_local_page")
+      /// Open Remote Page
       internal static let openWebPage = L10n.tr("Localizable", "home.button.open_web_page")
     }
   }

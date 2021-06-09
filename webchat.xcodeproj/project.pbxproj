@@ -22,6 +22,10 @@
 		7B97F6BE2670B9AD0064FBFD /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B97F6BD2670B9AD0064FBFD /* swiftgen.yml */; };
 		7B97F6C12670B9D10064FBFD /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97F6BF2670B9D10064FBFD /* Assets.swift */; };
 		7B97F6C22670B9D10064FBFD /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97F6C02670B9D10064FBFD /* Localizable.swift */; };
+		7BFA1D5E2670FBA700C18C0E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFA1D5D2670FBA700C18C0E /* Logger.swift */; };
+		7BFA1D602670FD6700C18C0E /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFA1D5F2670FD6700C18C0E /* ErrorHandler.swift */; };
+		7BFA1D632670FDF700C18C0E /* Error+Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFA1D622670FDF700C18C0E /* Error+Localizable.swift */; };
+		7BFA1D652671053D00C18C0E /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 7BFA1D642671053D00C18C0E /* index.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,10 @@
 		7B97F6BD2670B9AD0064FBFD /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = SOURCE_ROOT; };
 		7B97F6BF2670B9D10064FBFD /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		7B97F6C02670B9D10064FBFD /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		7BFA1D5D2670FBA700C18C0E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		7BFA1D5F2670FD6700C18C0E /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		7BFA1D622670FDF700C18C0E /* Error+Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Localizable.swift"; sourceTree = "<group>"; };
+		7BFA1D642671053D00C18C0E /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		8127356902E5E9B976D680EA /* Pods-webchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webchat.debug.xcconfig"; path = "Target Support Files/Pods-webchat/Pods-webchat.debug.xcconfig"; sourceTree = "<group>"; };
 		D6307A46B53E2F5443764960 /* Pods-webchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webchat.release.xcconfig"; path = "Target Support Files/Pods-webchat/Pods-webchat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +104,8 @@
 		7B0E616F266F71B300328A57 /* webchat */ = {
 			isa = PBXGroup;
 			children = (
+				7BFA1D612670FDE600C18C0E /* Errors */,
+				7BFA1D5C2670FB9A00C18C0E /* Common */,
 				7B97F6A9266FBB9F0064FBFD /* Coordinators */,
 				7B97F6A6266FBB290064FBFD /* Assembly */,
 				7B97F6A0266FB6CB0064FBFD /* Screens */,
@@ -160,6 +170,7 @@
 		7B97F6B02670B03C0064FBFD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7BFA1D642671053D00C18C0E /* index.html */,
 				7B97F6BD2670B9AD0064FBFD /* swiftgen.yml */,
 				7B97F6B62670B7130064FBFD /* Localizable */,
 				7B97F6B52670B6DA0064FBFD /* Generated */,
@@ -185,6 +196,23 @@
 				7B97F6BB2670B7260064FBFD /* Localizable.strings */,
 			);
 			path = Localizable;
+			sourceTree = "<group>";
+		};
+		7BFA1D5C2670FB9A00C18C0E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7BFA1D5D2670FBA700C18C0E /* Logger.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7BFA1D612670FDE600C18C0E /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				7BFA1D5F2670FD6700C18C0E /* ErrorHandler.swift */,
+				7BFA1D622670FDF700C18C0E /* Error+Localizable.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,6 +275,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BFA1D652671053D00C18C0E /* index.html in Resources */,
 				7B0E617D266F71B600328A57 /* LaunchScreen.storyboard in Resources */,
 				7B97F6B92670B7260064FBFD /* Localizable.strings in Resources */,
 				7B0E617A266F71B600328A57 /* Assets.xcassets in Resources */,
@@ -322,13 +351,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B97F6C22670B9D10064FBFD /* Localizable.swift in Sources */,
+				7BFA1D5E2670FBA700C18C0E /* Logger.swift in Sources */,
 				7B97F6A8266FBB3B0064FBFD /* HomeAssembly.swift in Sources */,
+				7BFA1D632670FDF700C18C0E /* Error+Localizable.swift in Sources */,
 				7B97F6A3266FB6EC0064FBFD /* ContentViewController.swift in Sources */,
 				7B0E6189266FB5BA00328A57 /* RootCoordinator.swift in Sources */,
 				7B0E6175266F71B300328A57 /* WebPageViewController.swift in Sources */,
 				7B97F6A5266FB8710064FBFD /* WebPageView.swift in Sources */,
 				7B97F6AF266FBF3F0064FBFD /* HomeView.swift in Sources */,
 				7B97F6AD266FBF350064FBFD /* HomeViewController.swift in Sources */,
+				7BFA1D602670FD6700C18C0E /* ErrorHandler.swift in Sources */,
 				7B97F6C12670B9D10064FBFD /* Assets.swift in Sources */,
 				7B0E6171266F71B300328A57 /* AppDelegate.swift in Sources */,
 			);

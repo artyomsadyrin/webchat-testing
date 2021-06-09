@@ -8,17 +8,21 @@
 
 "alert.action.ok" = "OK";
 "alert.action.close" = "Close";
+"alert.action.cancel" = "Cancel";
 
+"error.message.unknown" = "Something went wrong. Please contact the developer.";
 "error.open_web_page.title" = "Open Web Page Failed";
 "error.open_web_page.message.wrong_url" = "Wrong URL";
 "error.open_web_page.message.https_missing" = "https in URL is missing";
 "error.open_web_page.message.empty_handler_name" = "Empty handler name";
+"error.open_web_page.message.local_page_not_found" = "Local page not found";
 
-"home.button.open_web_page" = "Open Web Page";
+"home.button.open_web_page" = "Open Remote Page";
+"home.button.open_local_page" = "Open Local Page";
 "home.alert.enter_web_page_data.title" = "Enter web page config";
+"home.alert.enter_web_page_data.action.open" = "Open";
 "home.alert.enter_web_page_data.placeholder.url" = "https://google.com";
 "home.alert.enter_web_page_data.placeholder.handler_name" = "JS handler name to listen";
 "home.alert.enter_web_page_data.placeholder.injected_script" = "(Optional) JS script to inject";
-"home.alert.enter_web_page_data.action.open_web_page" = "Open web page";
 
 "web_page.alert.message_received.title" = "'%@' received";

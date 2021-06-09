@@ -25,43 +25,51 @@ final class HomeViewController: ContentViewController<HomeView> {
         contentView.openWebPageAction = { [weak self] in
             self?.enterWebPageConfigValues()
         }
+        contentView.openLocalPageAction = { [weak self] in
+            self?.openLocalPage()
+        }
         contentView.openWebPageButtonTitle = L10n.Home.Button.openWebPage
+        contentView.openLocalPageButtonTitle = L10n.Home.Button.openLocalPage
     }
 }
 
 private extension HomeViewController {
     func enterWebPageConfigValues() {
         let alert = UIAlertController(title: L10n.Home.Alert.EnterWebPageData.title, message: nil, preferredStyle: .alert)
+        let textFieldsPlaceholder = [L10n.Home.Alert.EnterWebPageData.Placeholder.url,
+                                     L10n.Home.Alert.EnterWebPageData.Placeholder.handlerName,
+                                     L10n.Home.Alert.EnterWebPageData.Placeholder.injectedScript]
         
-        alert.addTextField { textField in
-            textField.placeholder = L10n.Home.Alert.EnterWebPageData.Placeholder.url
+        textFieldsPlaceholder.forEach { placeholder in
+            alert.addTextField { textField in
+                textField.placeholder = placeholder
+            }
         }
         
-        alert.addTextField { textField in
-            textField.placeholder = L10n.Home.Alert.EnterWebPageData.Placeholder.handlerName
-        }
-        alert.addTextField { textField in
-            textField.placeholder = L10n.Home.Alert.EnterWebPageData.Placeholder.injectedScript
-        }
-        
-        alert.addAction(UIAlertAction(title: L10n.Home.Button.openWebPage, style: .default, handler: { [weak self] _ in
+        alert.addAction(UIAlertAction(title: L10n.Home.Alert.EnterWebPageData.Action.open, style: .default, handler: { [weak self] _ in
+            guard let textFields = alert.textFields,
+                  textFields.count >= textFieldsPlaceholder.count else {
+                self?.showErrorAlert(error: Errors.incorrectTextFieldsSetup)
+                return
+            }
+            
             let urlTextField = alert.textFields![0]
             let handlerTextField = alert.textFields![1]
             let injectedScriptTextField = alert.textFields![2]
             
-            guard urlTextField.text?.contains("https://") == true else {
-                self?.showErrorAlert(error: .httpsInURLMissing)
+            guard urlTextField.text?.contains(Constants.httpsPrefix) == true else {
+                self?.showErrorAlert(error: Errors.httpsInURLMissing)
                 return
             }
             
             guard let url = URL(string: urlTextField.text ?? "") else {
-                self?.showErrorAlert(error: .wrongURL)
+                self?.showErrorAlert(error: Errors.wrongURL)
                 return
             }
             
             guard let handlerName = handlerTextField.text,
                   !handlerName.isEmpty else {
-                self?.showErrorAlert(error: .emptyHandlerName)
+                self?.showErrorAlert(error: Errors.emptyHandlerName)
                 return
             }
             
@@ -70,33 +78,26 @@ private extension HomeViewController {
                                                          jsScript: injectedScriptTextField.text))
         }))
         
+        alert.addAction(UIAlertAction(title: L10n.Alert.Action.cancel,
+                                      style: .cancel))
+        
         present(alert, animated: true, completion: nil)
     }
     
-    func showErrorAlert(error: OpenWebPageErrors) {
-        let alert = UIAlertController(title: L10n.Error.OpenWebPage.title, message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: L10n.Alert.Action.ok, style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+    func openLocalPage() {
+        guard let url = Bundle.main.url(forResource: "index", withExtension: "html") else {
+            showErrorAlert(error: Errors.localPageNotFound)
+            return
+        }
+        
+        transitions.openWebPage?(WebPageConfig(url: url,
+                                               handlerName: "onChatEvent",
+                                               jsScript: nil))
     }
 }
 
-private enum OpenWebPageErrors: Error {
-    case wrongURL
-    case httpsInURLMissing
-    case emptyHandlerName
-}
-
-extension OpenWebPageErrors: LocalizedError {
-    private typealias Texts = L10n.Error.OpenWebPage.Message
-    
-    var errorDescription: String? {
-        switch self {
-        case .httpsInURLMissing:
-            return NSLocalizedString(Texts.httpsMissing, comment: "")
-        case .wrongURL:
-            return NSLocalizedString(Texts.wrongUrl, comment: "")
-        case .emptyHandlerName:
-            return NSLocalizedString(Texts.emptyHandlerName, comment: "")
-        }
+private extension HomeViewController {
+    enum Constants {
+        static let httpsPrefix = "https://"
     }
 }
