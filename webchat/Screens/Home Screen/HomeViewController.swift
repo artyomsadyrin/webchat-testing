@@ -10,7 +10,7 @@ import UIKit
 struct WebPageConfig {
     let url: URL
     let handlerName: String
-    let jsScript: String
+    let jsScript: String?
 }
 
 final class HomeViewController: ContentViewController<HomeView> {
@@ -65,15 +65,9 @@ private extension HomeViewController {
                 return
             }
             
-            guard let jsScript = injectedScriptTextField.text,
-                  !jsScript.isEmpty else {
-                self?.showErrorAlert(error: .emptyInjectedScript)
-                return
-            }
-            
             self?.transitions.openWebPage?(WebPageConfig(url: url,
                                                          handlerName: handlerName,
-                                                         jsScript: jsScript))
+                                                         jsScript: injectedScriptTextField.text))
         }))
         
         present(alert, animated: true, completion: nil)
@@ -90,7 +84,6 @@ private enum OpenWebPageErrors: Error {
     case wrongURL
     case httpsInURLMissing
     case emptyHandlerName
-    case emptyInjectedScript
 }
 
 extension OpenWebPageErrors: LocalizedError {
@@ -104,8 +97,6 @@ extension OpenWebPageErrors: LocalizedError {
             return NSLocalizedString(Texts.wrongUrl, comment: "")
         case .emptyHandlerName:
             return NSLocalizedString(Texts.emptyHandlerName, comment: "")
-        case .emptyInjectedScript:
-            return NSLocalizedString(Texts.emptyInjectedScript, comment: "")
         }
     }
 }

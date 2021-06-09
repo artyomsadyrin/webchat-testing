@@ -68,11 +68,14 @@ private extension WebPageViewController {
         
         userController.add(self, name: webPageConfig.handlerName)
         
-        let userScript = WKUserScript(source: webPageConfig.jsScript,
+        if let jsScript = webPageConfig.jsScript {
+            let userScript = WKUserScript(source: jsScript,
                                       injectionTime: .atDocumentEnd,
                                       forMainFrameOnly: false)
         
-        userController.addUserScript(userScript)
+            userController.addUserScript(userScript)
+        }
+        
         configuration.userContentController = userController
         
         let view = WKWebView(frame: .zero, configuration: configuration)
