@@ -45,20 +45,20 @@ internal enum L10n {
 
   internal enum Home {
     internal enum Alert {
-      internal enum EnterWebPageData {
-        /// Enter web page config
-        internal static let title = L10n.tr("Localizable", "home.alert.enter_web_page_data.title")
+      internal enum RemotePageData {
+        /// Enter remote page config
+        internal static let title = L10n.tr("Localizable", "home.alert.remote_page_data.title")
         internal enum Action {
           /// Open
-          internal static let `open` = L10n.tr("Localizable", "home.alert.enter_web_page_data.action.open")
+          internal static let `open` = L10n.tr("Localizable", "home.alert.remote_page_data.action.open")
         }
         internal enum Placeholder {
           /// JS handler name to listen
-          internal static let handlerName = L10n.tr("Localizable", "home.alert.enter_web_page_data.placeholder.handler_name")
+          internal static let handlerName = L10n.tr("Localizable", "home.alert.remote_page_data.placeholder.handler_name")
           /// (Optional) JS script to inject
-          internal static let injectedScript = L10n.tr("Localizable", "home.alert.enter_web_page_data.placeholder.injected_script")
+          internal static let injectedScript = L10n.tr("Localizable", "home.alert.remote_page_data.placeholder.injected_script")
           /// https://google.com
-          internal static let url = L10n.tr("Localizable", "home.alert.enter_web_page_data.placeholder.url")
+          internal static let url = L10n.tr("Localizable", "home.alert.remote_page_data.placeholder.url")
         }
       }
     }
@@ -66,7 +66,7 @@ internal enum L10n {
       /// Open Local Page
       internal static let openLocalPage = L10n.tr("Localizable", "home.button.open_local_page")
       /// Open Remote Page
-      internal static let openWebPage = L10n.tr("Localizable", "home.button.open_web_page")
+      internal static let openRemotePage = L10n.tr("Localizable", "home.button.open_remote_page")
     }
   }
 

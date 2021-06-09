@@ -59,7 +59,7 @@ private extension WebPageViewController {
                                       message: alertMessage ?? "null",
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Alert.Action.ok, style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     func makeWebView() -> WKWebView {

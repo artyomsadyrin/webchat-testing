@@ -10,17 +10,16 @@ import UIKit
 
 final class HomeView: UIView, ContentView {
     
-    private let openWebPageButton = makeActionButton()
+    private let openRemotePageButton = makeActionButton()
     private let openLocalPageButton = makeActionButton()
     
-    var openWebPageAction: (() -> Void)?
-    var openWebPageButtonTitle: String? {
-        didSet {
-            openWebPageButton.setTitle(openWebPageButtonTitle, for: .normal)
-        }
+    var openRemotePageButtonAction: (() -> Void)?
+    var openRemotePageButtonTitle: String? {
+        get { openRemotePageButton.title(for: .normal) }
+        set { openRemotePageButton.setTitle(newValue, for: .normal) }
     }
     
-    var openLocalPageAction: (() -> Void)?
+    var openLocalPageButtonAction: (() -> Void)?
     var openLocalPageButtonTitle: String? {
         get { openLocalPageButton.title(for: .normal) }
         set { openLocalPageButton.setTitle(newValue, for: .normal) }
@@ -29,7 +28,7 @@ final class HomeView: UIView, ContentView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        [openWebPageButton, openLocalPageButton].forEach {
+        [openRemotePageButton, openLocalPageButton].forEach {
             $0.layer.cornerRadius = $0.bounds.height / 2
         }
     }
@@ -50,8 +49,8 @@ final class HomeView: UIView, ContentView {
             $0.height.equalTo(actionButtonHeight)
         }
         
-        buttonContainer.addSubview(openWebPageButton)
-        openWebPageButton.snp.makeConstraints {
+        buttonContainer.addSubview(openRemotePageButton)
+        openRemotePageButton.snp.makeConstraints {
             $0.top.equalTo(openLocalPageButton.snp.bottom).offset(16)
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(actionButtonHeight)
@@ -59,7 +58,7 @@ final class HomeView: UIView, ContentView {
     }
     
     func setupSubviews() {
-        openWebPageButton.addTarget(self, action: #selector(openWebPageButtonTapped), for: .touchUpInside)
+        openRemotePageButton.addTarget(self, action: #selector(openRemotePageButtonTapped), for: .touchUpInside)
         openLocalPageButton.addTarget(self, action: #selector(openLocalPageButtonTapped), for: .touchUpInside)
 
         backgroundColor = .white
@@ -67,12 +66,12 @@ final class HomeView: UIView, ContentView {
 }
 
 private extension HomeView {
-    @objc func openWebPageButtonTapped() {
-        openWebPageAction?()
+    @objc func openRemotePageButtonTapped() {
+        openRemotePageButtonAction?()
     }
     
     @objc func openLocalPageButtonTapped() {
-        openLocalPageAction?()
+        openLocalPageButtonAction?()
     }
     
     static func makeActionButton() -> UIButton {

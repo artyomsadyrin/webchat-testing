@@ -17,12 +17,12 @@
 "error.open_web_page.message.empty_handler_name" = "Empty handler name";
 "error.open_web_page.message.local_page_not_found" = "Local page not found";
 
-"home.button.open_web_page" = "Open Remote Page";
+"home.button.open_remote_page" = "Open Remote Page";
 "home.button.open_local_page" = "Open Local Page";
-"home.alert.enter_web_page_data.title" = "Enter web page config";
-"home.alert.enter_web_page_data.action.open" = "Open";
-"home.alert.enter_web_page_data.placeholder.url" = "https://google.com";
-"home.alert.enter_web_page_data.placeholder.handler_name" = "JS handler name to listen";
-"home.alert.enter_web_page_data.placeholder.injected_script" = "(Optional) JS script to inject";
+"home.alert.remote_page_data.title" = "Enter remote page config";
+"home.alert.remote_page_data.action.open" = "Open";
+"home.alert.remote_page_data.placeholder.url" = "https://google.com";
+"home.alert.remote_page_data.placeholder.handler_name" = "JS handler name to listen";
+"home.alert.remote_page_data.placeholder.injected_script" = "(Optional) JS script to inject";
 
 "web_page.alert.message_received.title" = "'%@' received";

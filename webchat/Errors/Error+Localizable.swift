@@ -9,16 +9,6 @@ import Foundation
 
 // MARK: - Home Screen
 
-extension HomeViewController {
-    enum Errors {
-        case wrongURL
-        case httpsInURLMissing
-        case emptyHandlerName
-        case incorrectTextFieldsSetup
-        case localPageNotFound
-    }
-}
-
 extension HomeViewController.Errors: ErrorLocalizable {
     private typealias Texts = L10n.Error.OpenWebPage.Message
     
