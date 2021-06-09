@@ -22,7 +22,7 @@ final class WebPageView: UIView, ContentView {
         return view
     }()
     
-    private let webView = WKWebView()
+    private var webView: WKWebView!
 
     var closeButtonAction: (() -> Void)?
     var closeButtonTitle: String? {
@@ -58,8 +58,8 @@ final class WebPageView: UIView, ContentView {
         backgroundColor = Assets.Colors.webPageTopBar.color
     }
     
-    func registerDelegatesForWebView(getWebView: (WKWebView) -> Void) {
-        getWebView(webView)
+    func setWebView(_ webView: WKWebView) {
+        self.webView = webView
     }
     
     func setupURLForWebView(_ url: URL) {

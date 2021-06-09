@@ -13,11 +13,13 @@
 "error.open_web_page.message.wrong_url" = "Wrong URL";
 "error.open_web_page.message.https_missing" = "https in URL is missing";
 "error.open_web_page.message.empty_handler_name" = "Empty handler name";
+"error.open_web_page.message.empty_injected_script" = "JS script that needs to be injected is empty";
 
 "home.button.open_web_page" = "Open Web Page";
 "home.alert.enter_web_page_data.title" = "Enter web page config";
 "home.alert.enter_web_page_data.placeholder.url" = "https://google.com";
-"home.alert.enter_web_page_data.placeholder.handler_name" = "Enter JS handler name";
+"home.alert.enter_web_page_data.placeholder.handler_name" = "Enter JS handler name to listen";
+"home.alert.enter_web_page_data.placeholder.injected_script" = "Enter JS script to inject";
 "home.alert.enter_web_page_data.action.open_web_page" = "Open web page";
 
 "web_page.alert.message_received.title" = "'%@' received";

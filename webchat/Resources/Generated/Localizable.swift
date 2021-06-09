@@ -27,6 +27,8 @@ internal enum L10n {
       internal enum Message {
         /// Empty handler name
         internal static let emptyHandlerName = L10n.tr("Localizable", "error.open_web_page.message.empty_handler_name")
+        /// JS script that needs to be injected is empty
+        internal static let emptyInjectedScript = L10n.tr("Localizable", "error.open_web_page.message.empty_injected_script")
         /// https in URL is missing
         internal static let httpsMissing = L10n.tr("Localizable", "error.open_web_page.message.https_missing")
         /// Wrong URL
@@ -45,8 +47,10 @@ internal enum L10n {
           internal static let openWebPage = L10n.tr("Localizable", "home.alert.enter_web_page_data.action.open_web_page")
         }
         internal enum Placeholder {
-          /// Enter JS handler name
+          /// Enter JS handler name to listen
           internal static let handlerName = L10n.tr("Localizable", "home.alert.enter_web_page_data.placeholder.handler_name")
+          /// Enter JS script to inject
+          internal static let injectedScript = L10n.tr("Localizable", "home.alert.enter_web_page_data.placeholder.injected_script")
           /// https://google.com
           internal static let url = L10n.tr("Localizable", "home.alert.enter_web_page_data.placeholder.url")
         }

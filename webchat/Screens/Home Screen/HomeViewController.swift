@@ -10,6 +10,7 @@ import UIKit
 struct WebPageConfig {
     let url: URL
     let handlerName: String
+    let jsScript: String
 }
 
 final class HomeViewController: ContentViewController<HomeView> {
@@ -39,10 +40,14 @@ private extension HomeViewController {
         alert.addTextField { textField in
             textField.placeholder = L10n.Home.Alert.EnterWebPageData.Placeholder.handlerName
         }
+        alert.addTextField { textField in
+            textField.placeholder = L10n.Home.Alert.EnterWebPageData.Placeholder.injectedScript
+        }
         
         alert.addAction(UIAlertAction(title: L10n.Home.Button.openWebPage, style: .default, handler: { [weak self] _ in
             let urlTextField = alert.textFields![0]
             let handlerTextField = alert.textFields![1]
+            let injectedScriptTextField = alert.textFields![2]
             
             guard urlTextField.text?.contains("https://") == true else {
                 self?.showErrorAlert(error: .httpsInURLMissing)
@@ -56,11 +61,19 @@ private extension HomeViewController {
             
             guard let handlerName = handlerTextField.text,
                   !handlerName.isEmpty else {
-                self?.showErrorAlert(error: .wrongHandlerName)
+                self?.showErrorAlert(error: .emptyHandlerName)
                 return
             }
             
-            self?.transitions.openWebPage?(WebPageConfig(url: url, handlerName: handlerName))
+            guard let jsScript = injectedScriptTextField.text,
+                  !jsScript.isEmpty else {
+                self?.showErrorAlert(error: .emptyInjectedScript)
+                return
+            }
+            
+            self?.transitions.openWebPage?(WebPageConfig(url: url,
+                                                         handlerName: handlerName,
+                                                         jsScript: jsScript))
         }))
         
         present(alert, animated: true, completion: nil)
@@ -76,7 +89,8 @@ private extension HomeViewController {
 private enum OpenWebPageErrors: Error {
     case wrongURL
     case httpsInURLMissing
-    case wrongHandlerName
+    case emptyHandlerName
+    case emptyInjectedScript
 }
 
 extension OpenWebPageErrors: LocalizedError {
@@ -88,8 +102,10 @@ extension OpenWebPageErrors: LocalizedError {
             return NSLocalizedString(Texts.httpsMissing, comment: "")
         case .wrongURL:
             return NSLocalizedString(Texts.wrongUrl, comment: "")
-        case .wrongHandlerName:
+        case .emptyHandlerName:
             return NSLocalizedString(Texts.emptyHandlerName, comment: "")
+        case .emptyInjectedScript:
+            return NSLocalizedString(Texts.emptyInjectedScript, comment: "")
         }
     }
 }

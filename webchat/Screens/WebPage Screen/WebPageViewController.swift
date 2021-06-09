@@ -27,13 +27,14 @@ class WebPageViewController: ContentViewController<WebPageView> {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        super.loadView()
+        
+        contentView.setWebView(makeWebView())
+    }
+    
     override func setupData() {
         super.setupData()
-        
-        contentView.registerDelegatesForWebView { [weak self] webView in
-            guard let self = self else { return }
-            webView.configuration.userContentController.add(self, name: self.webPageConfig.handlerName)
-        }
         
         contentView.setupURLForWebView(webPageConfig.url)
         
@@ -59,6 +60,24 @@ private extension WebPageViewController {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: L10n.Alert.Action.ok, style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func makeWebView() -> WKWebView {
+        let configuration = WKWebViewConfiguration()
+        let userController = WKUserContentController()
+        
+        userController.add(self, name: webPageConfig.handlerName)
+        
+        let userScript = WKUserScript(source: webPageConfig.jsScript,
+                                      injectionTime: .atDocumentEnd,
+                                      forMainFrameOnly: false)
+        
+        userController.addUserScript(userScript)
+        configuration.userContentController = userController
+        
+        let view = WKWebView(frame: .zero, configuration: configuration)
+        view.allowsBackForwardNavigationGestures = true
+        return view
     }
 }
 
