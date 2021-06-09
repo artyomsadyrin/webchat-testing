@@ -25,7 +25,7 @@ final class HomeViewController: ContentViewController<HomeView> {
     
     override func setupData() {
         contentView.openRemotePageButtonAction = { [weak self] in
-            self?.openRemotePage()
+            self?.enterConfigValuesAndOpenRemotePage()
         }
         contentView.openLocalPageButtonAction = { [weak self] in
             self?.openLocalPage()
@@ -36,23 +36,23 @@ final class HomeViewController: ContentViewController<HomeView> {
 }
 
 private extension HomeViewController {
-    func openRemotePage() {
+    func enterConfigValuesAndOpenRemotePage() {
         typealias Texts = L10n.Home.Alert.RemotePageData
         
-        let alert = UIAlertController(title: Texts.title, message: nil, preferredStyle: .alert)
-        let textFieldsPlaceholder = [Texts.Placeholder.url,
-                                     Texts.Placeholder.handlerName,
-                                     Texts.Placeholder.injectedScript]
+        let alertController = UIAlertController(title: Texts.title, message: nil, preferredStyle: .alert)
+        let textFieldsPlaceholders = [Texts.Placeholder.url,
+                                      Texts.Placeholder.handlerName,
+                                      Texts.Placeholder.injectedScript]
         
-        textFieldsPlaceholder.forEach { placeholder in
-            alert.addTextField { textField in
+        textFieldsPlaceholders.forEach { placeholder in
+            alertController.addTextField { textField in
                 textField.placeholder = placeholder
             }
         }
         
-        alert.addAction(UIAlertAction(title: Texts.Action.open, style: .default, handler: { [weak self] _ in
-            guard let textFields = alert.textFields,
-                  textFields.count >= textFieldsPlaceholder.count else {
+        alertController.addAction(UIAlertAction(title: Texts.Action.open, style: .default, handler: { [weak self] _ in
+            guard let textFields = alertController.textFields,
+                  textFields.count >= textFieldsPlaceholders.count else {
                 self?.showErrorAlert(error: Errors.incorrectTextFieldsSetup)
                 return
             }
@@ -82,10 +82,10 @@ private extension HomeViewController {
                                                          jsScript: injectedScriptTextField.text))
         }))
         
-        alert.addAction(UIAlertAction(title: L10n.Alert.Action.cancel,
+        alertController.addAction(UIAlertAction(title: L10n.Alert.Action.cancel,
                                       style: .cancel))
         
-        present(alert, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func openLocalPage() {
