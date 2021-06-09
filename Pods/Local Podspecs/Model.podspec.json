@@ -1,0 +1,24 @@
+{
+  "name": "Model",
+  "version": "0.1.0",
+  "summary": "Base classes to implement Business-model. Samples included.",
+  "description": "Yet another approach of organizing business logic layer. Includes all base classes as well as Sample project to dive deep into this approach.",
+  "homepage": "https://github.com/zSOLz/model",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Andrew Solovey": "sol.bsuir@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/zSOLz/model.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "Model/Model/**/*.swift",
+  "requires_arc": true,
+  "frameworks": "Foundation"
+}

@@ -1,0 +1,6 @@
+framework module Pods_webchat {
+  umbrella header "Pods-webchat-umbrella.h"
+
+  export *
+  module * { export * }
+}
