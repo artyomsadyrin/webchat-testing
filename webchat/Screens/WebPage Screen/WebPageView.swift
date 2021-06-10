@@ -11,18 +11,13 @@ import WebKit
 
 final class WebPageView: UIView, ContentView {
     
-    let closeButton = UIBarButtonItem(title: L10n.Alert.Action.done,
-                                      style: .done,
-                                      target: self,
-                                      action: #selector(closeButtonTapped))
-    
     private let webViewTopBorder: UIView = {
         let view = UIView()
         view.backgroundColor = Assets.Colors.border.color
         return view
     }()
     
-    var webView: WKWebView!
+    private var webView: WKWebView!
 
     var closeButtonAction: (() -> Void)?
     
@@ -32,6 +27,14 @@ final class WebPageView: UIView, ContentView {
             $0.top.equalTo(safeAreaLayoutGuide)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    func setWebView(_ webView: WKWebView) {
+        self.webView = webView
+    }
+    
+    func configureWebView(getWebView: (WKWebView) -> Void) {
+        getWebView(webView)
     }
     
     func setupSubviews() {

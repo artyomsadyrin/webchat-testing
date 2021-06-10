@@ -24,14 +24,20 @@ class WebPageViewController: ContentViewController<WebPageView> {
     override func loadView() {
         super.loadView()
         
-        contentView.webView = makeWebView()
+        contentView.setWebView(makeWebView())
     }
     
     override func setupData() {
         super.setupData()
         
-        contentView.webView.load(URLRequest(url: webPageConfig.url))
-        contentView.webView.navigationDelegate = self
+        contentView.configureWebView { [weak self] webView in
+            guard let self = self else { return }
+            webView.load(URLRequest(url: webPageConfig.url))
+            webView.navigationDelegate = self
+            
+            let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
+            self.navigationItem.rightBarButtonItem = refresh
+        }
     }
 }
 
