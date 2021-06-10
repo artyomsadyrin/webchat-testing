@@ -62,7 +62,7 @@ private extension HomeViewController {
             let handlerNameTextField = textFields[1]
             let injectedScriptTextField = textFields[2]
             
-            guard urlTextField.text?.contains(Constants.httpsPrefix) == true else {
+            guard urlTextField.text?.hasPrefix(Constants.httpsPrefix) == true else {
                 self?.showErrorAlert(error: OpenWebPageError.httpsInURLMissing)
                 return
             }
