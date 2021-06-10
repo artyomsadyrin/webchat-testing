@@ -6,9 +6,12 @@
   
 */
 
+"common.app_name" = "WebChat";
+
 "alert.action.ok" = "OK";
 "alert.action.close" = "Close";
 "alert.action.cancel" = "Cancel";
+"alert.action.done" = "Done";
 
 "error.message.unknown" = "Something went wrong. Please contact the developer.";
 "error.open_web_page.title" = "Open Web Page Failed";

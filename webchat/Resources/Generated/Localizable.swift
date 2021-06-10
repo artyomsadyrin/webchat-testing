@@ -17,9 +17,16 @@ internal enum L10n {
       internal static let cancel = L10n.tr("Localizable", "alert.action.cancel")
       /// Close
       internal static let close = L10n.tr("Localizable", "alert.action.close")
+      /// Done
+      internal static let done = L10n.tr("Localizable", "alert.action.done")
       /// OK
       internal static let ok = L10n.tr("Localizable", "alert.action.ok")
     }
+  }
+
+  internal enum Common {
+    /// WebChat
+    internal static let appName = L10n.tr("Localizable", "common.app_name")
   }
 
   internal enum Error {

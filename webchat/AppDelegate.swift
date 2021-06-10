@@ -20,7 +20,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         rootCoordinator.start(at: window)
         
+        setupNavigationBarAppearance()
+        
         return true
     }
 }
 
+private extension AppDelegate {
+    func setupNavigationBarAppearance() {
+        let appearance = UINavigationBar.appearance()
+        
+        appearance.barStyle = .default
+        appearance.prefersLargeTitles = false
+        
+        // Hide back button indicator
+        appearance.backIndicatorImage = UIImage()
+        appearance.backIndicatorTransitionMaskImage = UIImage()
+    }
+}

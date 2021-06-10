@@ -16,24 +16,8 @@ final class RootCoordinator: ContainerCoordinator {
 }
 
 private extension RootCoordinator {
-    func showWebPageScreen(config: WebPageConfig) {
-        let viewController = HomeAssembly.makeWebPageScreen(config: config)
-        
-        viewController.transitions.close = { [weak self] in
-            self?.dismissModalController()
-        }
-        
-        presentModal(controller: viewController, presentationStyle: .fullScreen)
-    }
-    
     func showHomeScreen() {
-        let viewController = HomeAssembly.makeHomeScreen()
-        
-        viewController.transitions.openWebPage = { [weak self] in
-            self?.showWebPageScreen(config: $0)
-        }
-        
-        setContentCoordinator(nil)
-        containerViewController.setContentViewController(viewController)
+        let coordinator = HomeAssembly.makeHomeCoordinator(parent: self)
+        setContentCoordinator(coordinator)
     }
 }

@@ -10,14 +10,8 @@ import WebKit
 
 class WebPageViewController: ContentViewController<WebPageView> {
     
-    struct Transitions {
-        var close: (() -> Void)?
-    }
-    
     private let webPageConfig: WebPageConfig
-    
-    var transitions = Transitions()
-    
+        
     init(config: WebPageConfig) {
         self.webPageConfig = config
         super.init(nibName: nil, bundle: nil)
@@ -30,22 +24,26 @@ class WebPageViewController: ContentViewController<WebPageView> {
     override func loadView() {
         super.loadView()
         
-        contentView.setWebView(makeWebView())
+        contentView.webView = makeWebView()
     }
     
     override func setupData() {
         super.setupData()
         
-        contentView.setupURLForWebView(webPageConfig.url)
-        
-        contentView.closeButtonAction = transitions.close
-        contentView.closeButtonTitle = L10n.Alert.Action.close
+        contentView.webView.load(URLRequest(url: webPageConfig.url))
+        contentView.webView.navigationDelegate = self
     }
 }
 
 extension WebPageViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         showAlert(message: message)
+    }
+}
+
+extension WebPageViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        title = webView.url?.host
     }
 }
 

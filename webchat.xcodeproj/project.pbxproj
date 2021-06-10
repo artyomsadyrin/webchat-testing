@@ -23,6 +23,7 @@
 		7B97F6C12670B9D10064FBFD /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97F6BF2670B9D10064FBFD /* Assets.swift */; };
 		7B97F6C22670B9D10064FBFD /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B97F6C02670B9D10064FBFD /* Localizable.swift */; };
 		7BB5A28E267200470035E062 /* OpenWebPageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5A28D267200470035E062 /* OpenWebPageError.swift */; };
+		7BB5A295267206300035E062 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB5A294267206300035E062 /* HomeCoordinator.swift */; };
 		7BFA1D5E2670FBA700C18C0E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFA1D5D2670FBA700C18C0E /* Logger.swift */; };
 		7BFA1D602670FD6700C18C0E /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFA1D5F2670FD6700C18C0E /* ErrorHandler.swift */; };
 		7BFA1D632670FDF700C18C0E /* Error+Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFA1D622670FDF700C18C0E /* Error+Localizable.swift */; };
@@ -49,6 +50,7 @@
 		7B97F6BF2670B9D10064FBFD /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		7B97F6C02670B9D10064FBFD /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		7BB5A28D267200470035E062 /* OpenWebPageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWebPageError.swift; sourceTree = "<group>"; };
+		7BB5A294267206300035E062 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		7BFA1D5D2670FBA700C18C0E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		7BFA1D5F2670FD6700C18C0E /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		7BFA1D622670FDF700C18C0E /* Error+Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Localizable.swift"; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				7B0E6188266FB5BA00328A57 /* RootCoordinator.swift */,
+				7BB5A294267206300035E062 /* HomeCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				7B97F6C22670B9D10064FBFD /* Localizable.swift in Sources */,
 				7BFA1D5E2670FBA700C18C0E /* Logger.swift in Sources */,
 				7B97F6A8266FBB3B0064FBFD /* HomeAssembly.swift in Sources */,
+				7BB5A295267206300035E062 /* HomeCoordinator.swift in Sources */,
 				7BFA1D632670FDF700C18C0E /* Error+Localizable.swift in Sources */,
 				7B97F6A3266FB6EC0064FBFD /* ContentViewController.swift in Sources */,
 				7BB5A28E267200470035E062 /* OpenWebPageError.swift in Sources */,

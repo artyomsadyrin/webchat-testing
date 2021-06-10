@@ -15,7 +15,16 @@ final class HomeViewController: ContentViewController<HomeView> {
     
     var transitions = Transitions()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: L10n.Alert.Action.done, style: .done, target: nil, action: nil)
+    }
+    
     override func setupData() {
+        title = L10n.Common.appName
+        
         contentView.openRemotePageButtonAction = { [weak self] in
             self?.enterConfigValuesAndOpenRemotePage()
         }
