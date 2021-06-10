@@ -15,14 +15,6 @@ final class HomeViewController: ContentViewController<HomeView> {
     
     var transitions = Transitions()
     
-    enum Errors {
-        case wrongURL
-        case httpsInURLMissing
-        case emptyHandlerName
-        case incorrectTextFieldsSetup
-        case localPageNotFound
-    }
-    
     override func setupData() {
         contentView.openRemotePageButtonAction = { [weak self] in
             self?.enterConfigValuesAndOpenRemotePage()
@@ -53,7 +45,7 @@ private extension HomeViewController {
         alertController.addAction(UIAlertAction(title: Texts.Action.open, style: .default, handler: { [weak self] _ in
             guard let textFields = alertController.textFields,
                   textFields.count >= textFieldsPlaceholders.count else {
-                self?.showErrorAlert(error: Errors.incorrectTextFieldsSetup)
+                self?.showErrorAlert(error: OpenWebPageError.incorrectTextFieldsSetup)
                 return
             }
             
@@ -62,18 +54,18 @@ private extension HomeViewController {
             let injectedScriptTextField = textFields[2]
             
             guard urlTextField.text?.contains(Constants.httpsPrefix) == true else {
-                self?.showErrorAlert(error: Errors.httpsInURLMissing)
+                self?.showErrorAlert(error: OpenWebPageError.httpsInURLMissing)
                 return
             }
             
             guard let url = URL(string: urlTextField.text ?? "") else {
-                self?.showErrorAlert(error: Errors.wrongURL)
+                self?.showErrorAlert(error: OpenWebPageError.wrongURL)
                 return
             }
             
             guard let handlerName = handlerNameTextField.text,
                   !handlerName.isEmpty else {
-                self?.showErrorAlert(error: Errors.emptyHandlerName)
+                self?.showErrorAlert(error: OpenWebPageError.emptyHandlerName)
                 return
             }
             
@@ -91,7 +83,7 @@ private extension HomeViewController {
     func openLocalPage() {
         guard let url = Bundle.main.url(forResource: Constants.localPage.name,
                                         withExtension: Constants.localPage.extension) else {
-            showErrorAlert(error: Errors.localPageNotFound)
+            showErrorAlert(error: OpenWebPageError.localPageNotFound)
             return
         }
         

@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Home Screen
 
-extension HomeViewController.Errors: ErrorLocalizable {
+extension OpenWebPageError: ErrorLocalizable {
     private typealias Texts = L10n.Error.OpenWebPage.Message
     
     var title: String { L10n.Error.OpenWebPage.title }
