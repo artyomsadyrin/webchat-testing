@@ -12,7 +12,7 @@ class WebPageViewController: ContentViewController<WebPageView> {
     
     private let webPageConfig: WebPageConfig
     
-    private var observation: NSKeyValueObservation?
+    private var progressObservation: NSKeyValueObservation?
     
     init(config: WebPageConfig) {
         self.webPageConfig = config
@@ -24,7 +24,7 @@ class WebPageViewController: ContentViewController<WebPageView> {
     }
     
     deinit {
-        observation = nil
+        progressObservation = nil
     }
     
     override func loadView() {
@@ -39,14 +39,32 @@ class WebPageViewController: ContentViewController<WebPageView> {
         contentView.webView.load(URLRequest(url: webPageConfig.url))
         contentView.webView.navigationDelegate = self
         
-        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: contentView.webView, action: #selector(contentView.webView.reload))
-        self.navigationItem.rightBarButtonItem = refresh
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: contentView.webView, action: #selector(contentView.webView.reload))
+        let stopLoadingButton = UIBarButtonItem(barButtonSystemItem: .stop, target: contentView.webView, action: #selector(contentView.webView.stopLoading))
         
-        observation = contentView.webView.observe(
+        navigationItem.rightBarButtonItem = refreshButton
+        
+        progressObservation = contentView.webView.observe(
             \WKWebView.estimatedProgress,
             options: .new) { [weak self] _, change in
+            
             if let newValue = change.newValue {
-                self?.contentView.progressView.progress = Float(newValue)
+                let progress = Float(newValue)
+                let finished = progress == 1
+                DispatchQueue.main.async {
+                    if finished {
+                        if !(self?.navigationItem.rightBarButtonItem == refreshButton) {
+                            self?.navigationItem.rightBarButtonItem = refreshButton
+                        }
+                    } else {
+                        if !(self?.navigationItem.rightBarButtonItem == stopLoadingButton) {
+                            self?.navigationItem.rightBarButtonItem = stopLoadingButton
+                        }
+                    }
+                    
+                    self?.contentView.progressView.isHidden = finished
+                }
+                self?.contentView.progressView.progress = progress
             }
         }
     }
