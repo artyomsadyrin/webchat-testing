@@ -11,7 +11,9 @@ import WebKit
 class WebPageViewController: ContentViewController<WebPageView> {
     
     private let webPageConfig: WebPageConfig
-        
+    
+    private var observation: NSKeyValueObservation?
+    
     init(config: WebPageConfig) {
         self.webPageConfig = config
         super.init(nibName: nil, bundle: nil)
@@ -21,22 +23,31 @@ class WebPageViewController: ContentViewController<WebPageView> {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        observation = nil
+    }
+    
     override func loadView() {
         super.loadView()
         
-        contentView.setWebView(makeWebView())
+        contentView.webView = makeWebView()
     }
     
     override func setupData() {
         super.setupData()
         
-        contentView.configureWebView { [weak self] webView in
-            guard let self = self else { return }
-            webView.load(URLRequest(url: webPageConfig.url))
-            webView.navigationDelegate = self
-            
-            let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
-            self.navigationItem.rightBarButtonItem = refresh
+        contentView.webView.load(URLRequest(url: webPageConfig.url))
+        contentView.webView.navigationDelegate = self
+        
+        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: contentView.webView, action: #selector(contentView.webView.reload))
+        self.navigationItem.rightBarButtonItem = refresh
+        
+        observation = contentView.webView.observe(
+            \WKWebView.estimatedProgress,
+            options: .new) { [weak self] _, change in
+            if let newValue = change.newValue {
+                self?.contentView.progressView.progress = Float(newValue)
+            }
         }
     }
 }
@@ -87,4 +98,3 @@ private extension WebPageViewController {
         return view
     }
 }
-
