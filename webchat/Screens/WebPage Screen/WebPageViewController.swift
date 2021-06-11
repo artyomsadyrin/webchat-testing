@@ -85,6 +85,9 @@ extension WebPageViewController: WKNavigationDelegate {
 private extension WebPageViewController {
     func showAlert(message: WKScriptMessage) {
         let alertMessage = (message.body as? [String: String])?.reduce(into: String()) {
+            if !$0.isEmpty {
+                $0 += "\n"
+            }
             $0 += "\($1.key) - \($1.value)"
         }
         
