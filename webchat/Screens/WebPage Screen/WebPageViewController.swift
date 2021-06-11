@@ -10,6 +10,12 @@ import WebKit
 
 class WebPageViewController: ContentViewController<WebPageView> {
     
+    struct Transitions {
+        var close: (() -> Void)?
+    }
+    
+    var transitions = Transitions()
+    
     private let webPageConfig: WebPageConfig
     
     private var progressObservation: NSKeyValueObservation?
@@ -38,6 +44,7 @@ class WebPageViewController: ContentViewController<WebPageView> {
         
         contentView.webView.load(URLRequest(url: webPageConfig.url))
         contentView.webView.navigationDelegate = self
+        contentView.webView.uiDelegate = self
         
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: contentView.webView, action: #selector(contentView.webView.reload))
         let stopLoadingButton = UIBarButtonItem(barButtonSystemItem: .stop, target: contentView.webView, action: #selector(contentView.webView.stopLoading))
@@ -79,6 +86,12 @@ extension WebPageViewController: WKScriptMessageHandler {
 extension WebPageViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         title = webView.url?.host
+    }
+}
+
+extension WebPageViewController: WKUIDelegate {
+    func webViewDidClose(_ webView: WKWebView) {
+        transitions.close?()
     }
 }
 

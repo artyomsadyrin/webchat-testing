@@ -16,12 +16,6 @@ final class HomeCoordinator: NavigationCoordinator {
 }
 
 private extension HomeCoordinator {
-    func showWebPageScreen(config: WebPageConfig) {
-        let viewController = HomeAssembly.makeWebPageScreen(config: config)
-        
-        pushViewController(viewController, animated: true)
-    }
-    
     func showHomeScreen() {
         let viewController = HomeAssembly.makeHomeScreen()
         
@@ -30,5 +24,15 @@ private extension HomeCoordinator {
         }
         
         pushViewController(viewController)
+    }
+    
+    func showWebPageScreen(config: WebPageConfig) {
+        let viewController = HomeAssembly.makeWebPageScreen(config: config)
+        
+        viewController.transitions.close = { [weak self] in
+            self?.popViewController(animated: true)
+        }
+        
+        pushViewController(viewController, animated: true)
     }
 }
