@@ -17,15 +17,38 @@ final class WebPageView: UIView, ContentView {
         return view
     }()
     
-    var webView: WKWebView!
+    private let webView: WKWebView
 
-    let progressView: UIProgressView = {
+    private let progressView: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .default)
         view.sizeToFit()
         return view
     }()
     
+    let stopLoadingButton: UIBarButtonItem
+    let refreshButton: UIBarButtonItem
+
+    private var progressObservation: NSKeyValueObservation?
+    
     var closeButtonAction: (() -> Void)?
+    var didProgressChange: ((Float) -> Void)?
+    
+    init(webView: WKWebView) {
+        self.webView = webView
+        
+        refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
+        stopLoadingButton = UIBarButtonItem(barButtonSystemItem: .stop, target: webView, action: #selector(webView.stopLoading))
+        
+        super.init(frame: .zero)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        progressObservation = nil
+    }
     
     func arrangeSubviews() {
         addSubview(progressView)
@@ -44,6 +67,32 @@ final class WebPageView: UIView, ContentView {
     
     func setupSubviews() {
         backgroundColor = Assets.Colors.webPageTopBar.color
+        
+        progressObservation = webView.observe(
+            \WKWebView.estimatedProgress,
+             options: .new
+        ) { [weak self] _, change in
+            guard let newValue = change.newValue else { return }
+            
+            DispatchQueue.main.async {
+                self?.didProgressChange?(Float(newValue))
+            }
+        }
+    }
+}
+
+extension WebPageView {
+    func load(url: URL) {
+        webView.load(.init(url: url))
+    }
+    
+    func setupWebView(_ setup: (WKWebView) -> Void) {
+        setup(webView)
+    }
+    
+    func setupProgressView(isHidden: Bool, progress: Float) {
+        progressView.isHidden = isHidden
+        progressView.progress = progress
     }
 }
 

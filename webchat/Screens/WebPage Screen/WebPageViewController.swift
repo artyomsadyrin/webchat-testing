@@ -17,9 +17,7 @@ class WebPageViewController: ContentViewController<WebPageView> {
     var transitions = Transitions()
     
     private let webPageConfig: WebPageConfig
-    
-    private var progressObservation: NSKeyValueObservation?
-    
+        
     init(config: WebPageConfig) {
         self.webPageConfig = config
         super.init(nibName: nil, bundle: nil)
@@ -29,51 +27,23 @@ class WebPageViewController: ContentViewController<WebPageView> {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        progressObservation = nil
-    }
-    
     override func loadView() {
-        super.loadView()
-        
-        contentView.webView = makeWebView()
+        view = WebPageView(webView: makeWebView())
     }
     
     override func setupData() {
         super.setupData()
         
-        contentView.webView.load(URLRequest(url: webPageConfig.url))
-        contentView.webView.navigationDelegate = self
-        contentView.webView.uiDelegate = self
-        
-        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: contentView.webView, action: #selector(contentView.webView.reload))
-        let stopLoadingButton = UIBarButtonItem(barButtonSystemItem: .stop, target: contentView.webView, action: #selector(contentView.webView.stopLoading))
-        
-        navigationItem.rightBarButtonItem = refreshButton
-        
-        progressObservation = contentView.webView.observe(
-            \WKWebView.estimatedProgress,
-            options: .new) { [weak self] _, change in
+        setupLoadingBarButton()
+
+        contentView.setupWebView { [weak self] webView in
+            guard let self else { return }
             
-            if let newValue = change.newValue {
-                let progress = Float(newValue)
-                let finished = progress == 1
-                DispatchQueue.main.async {
-                    if finished {
-                        if !(self?.navigationItem.rightBarButtonItem == refreshButton) {
-                            self?.navigationItem.rightBarButtonItem = refreshButton
-                        }
-                    } else {
-                        if !(self?.navigationItem.rightBarButtonItem == stopLoadingButton) {
-                            self?.navigationItem.rightBarButtonItem = stopLoadingButton
-                        }
-                    }
-                    
-                    self?.contentView.progressView.isHidden = finished
-                }
-                self?.contentView.progressView.progress = progress
-            }
+            webView.navigationDelegate = self
+            webView.uiDelegate = self
         }
+        
+        load(url: webPageConfig.url)
     }
 }
 
@@ -96,6 +66,33 @@ extension WebPageViewController: WKUIDelegate {
 }
 
 private extension WebPageViewController {
+    func load(url: URL) {
+        contentView.setupProgressView(isHidden: false, progress: 0)
+        contentView.load(url: url)
+    }
+    
+    func setupLoadingBarButton() {
+        navigationItem.rightBarButtonItem = contentView.refreshButton
+        
+        contentView.didProgressChange = { [weak self] progress in
+            guard let self else { return }
+            
+            let isFinished = progress >= 1
+            
+            if isFinished {
+                self.navigationItem.rightBarButtonItem = self.contentView.refreshButton
+            } else {
+                let stopLoadingButton = self.contentView.stopLoadingButton
+                
+                guard self.navigationItem.rightBarButtonItem != stopLoadingButton else { return }
+                
+                self.navigationItem.rightBarButtonItem = stopLoadingButton
+            }
+            
+            self.contentView.setupProgressView(isHidden: isFinished, progress: progress)
+        }
+    }
+    
     func showAlert(message: WKScriptMessage) {
         let alertMessage = (message.body as? [String: String])?.reduce(into: String()) {
             if !$0.isEmpty {
