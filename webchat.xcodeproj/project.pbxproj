@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,6 +29,12 @@
 		7BFA1D632670FDF700C18C0E /* Error+Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFA1D622670FDF700C18C0E /* Error+Localizable.swift */; };
 		7BFA1D652671053D00C18C0E /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 7BFA1D642671053D00C18C0E /* index.html */; };
 		7BFA1D6726710DEF00C18C0E /* WebPageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFA1D6626710DEF00C18C0E /* WebPageConfig.swift */; };
+		96B9AA342ADD6AA20081BF1C /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B9AA332ADD6AA20081BF1C /* DataManager.swift */; };
+		96B9AA362ADD6AF60081BF1C /* WebPageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B9AA352ADD6AF60081BF1C /* WebPageCache.swift */; };
+		96B9AA392ADD6B420081BF1C /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B9AA382ADD6B420081BF1C /* Interactor.swift */; };
+		96B9AA3B2ADD6BC00081BF1C /* WebPageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B9AA3A2ADD6BC00081BF1C /* WebPageInteractor.swift */; };
+		96B9AA3D2ADD6C240081BF1C /* DataManagersAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B9AA3C2ADD6C240081BF1C /* DataManagersAssembly.swift */; };
+		96B9AA3F2ADD6CA30081BF1C /* InteractorsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96B9AA3E2ADD6CA30081BF1C /* InteractorsAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +63,12 @@
 		7BFA1D642671053D00C18C0E /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		7BFA1D6626710DEF00C18C0E /* WebPageConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageConfig.swift; sourceTree = "<group>"; };
 		8127356902E5E9B976D680EA /* Pods-webchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webchat.debug.xcconfig"; path = "Target Support Files/Pods-webchat/Pods-webchat.debug.xcconfig"; sourceTree = "<group>"; };
+		96B9AA332ADD6AA20081BF1C /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		96B9AA352ADD6AF60081BF1C /* WebPageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageCache.swift; sourceTree = "<group>"; };
+		96B9AA382ADD6B420081BF1C /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
+		96B9AA3A2ADD6BC00081BF1C /* WebPageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageInteractor.swift; sourceTree = "<group>"; };
+		96B9AA3C2ADD6C240081BF1C /* DataManagersAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagersAssembly.swift; sourceTree = "<group>"; };
+		96B9AA3E2ADD6CA30081BF1C /* InteractorsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractorsAssembly.swift; sourceTree = "<group>"; };
 		D6307A46B53E2F5443764960 /* Pods-webchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webchat.release.xcconfig"; path = "Target Support Files/Pods-webchat/Pods-webchat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				7B97F6A7266FBB3B0064FBFD /* HomeAssembly.swift */,
+				96B9AA3C2ADD6C240081BF1C /* DataManagersAssembly.swift */,
+				96B9AA3E2ADD6CA30081BF1C /* InteractorsAssembly.swift */,
 			);
 			path = Assembly;
 			sourceTree = "<group>";
@@ -208,6 +222,8 @@
 		7BB5A28A267200260035E062 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				96B9AA372ADD6B380081BF1C /* Interactors */,
+				96B9AA322ADD6A8F0081BF1C /* DataManagers */,
 				7BB5A28C267200340035E062 /* Models */,
 				7BB5A28B2672002E0035E062 /* Errors */,
 			);
@@ -246,6 +262,24 @@
 				7BFA1D622670FDF700C18C0E /* Error+Localizable.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		96B9AA322ADD6A8F0081BF1C /* DataManagers */ = {
+			isa = PBXGroup;
+			children = (
+				96B9AA332ADD6AA20081BF1C /* DataManager.swift */,
+				96B9AA352ADD6AF60081BF1C /* WebPageCache.swift */,
+			);
+			path = DataManagers;
+			sourceTree = "<group>";
+		};
+		96B9AA372ADD6B380081BF1C /* Interactors */ = {
+			isa = PBXGroup;
+			children = (
+				96B9AA382ADD6B420081BF1C /* Interactor.swift */,
+				96B9AA3A2ADD6BC00081BF1C /* WebPageInteractor.swift */,
+			);
+			path = Interactors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -387,15 +421,21 @@
 				7BFA1D5E2670FBA700C18C0E /* Logger.swift in Sources */,
 				7B97F6A8266FBB3B0064FBFD /* HomeAssembly.swift in Sources */,
 				7BB5A295267206300035E062 /* HomeCoordinator.swift in Sources */,
+				96B9AA3B2ADD6BC00081BF1C /* WebPageInteractor.swift in Sources */,
 				7BFA1D632670FDF700C18C0E /* Error+Localizable.swift in Sources */,
+				96B9AA3F2ADD6CA30081BF1C /* InteractorsAssembly.swift in Sources */,
 				7B97F6A3266FB6EC0064FBFD /* ContentViewController.swift in Sources */,
 				7BB5A28E267200470035E062 /* OpenWebPageError.swift in Sources */,
 				7B0E6189266FB5BA00328A57 /* RootCoordinator.swift in Sources */,
 				7B0E6175266F71B300328A57 /* WebPageViewController.swift in Sources */,
+				96B9AA362ADD6AF60081BF1C /* WebPageCache.swift in Sources */,
+				96B9AA342ADD6AA20081BF1C /* DataManager.swift in Sources */,
+				96B9AA3D2ADD6C240081BF1C /* DataManagersAssembly.swift in Sources */,
 				7B97F6A5266FB8710064FBFD /* WebPageView.swift in Sources */,
 				7B97F6AF266FBF3F0064FBFD /* HomeView.swift in Sources */,
 				7B97F6AD266FBF350064FBFD /* HomeViewController.swift in Sources */,
 				7BFA1D602670FD6700C18C0E /* ErrorHandler.swift in Sources */,
+				96B9AA392ADD6B420081BF1C /* Interactor.swift in Sources */,
 				7B97F6C12670B9D10064FBFD /* Assets.swift in Sources */,
 				7B0E6171266F71B300328A57 /* AppDelegate.swift in Sources */,
 				7BFA1D6726710DEF00C18C0E /* WebPageConfig.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum OpenWebPageError {
+enum WebPageError {
     case wrongURL
     case httpsInURLMissing
     case emptyHandlerName

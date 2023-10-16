@@ -13,25 +13,29 @@ final class HomeCoordinator: NavigationCoordinator {
         
         showHomeScreen()
     }
+    
+    override func registerContent() {
+        super.registerContent()
+        
+        register(DataManagersAssembly.webPageCache())
+    }
 }
 
 private extension HomeCoordinator {
     func showHomeScreen() {
-        let viewController = HomeAssembly.makeHomeScreen()
-        
-        viewController.transitions.openWebPage = { [weak self] in
-            self?.showWebPageScreen(config: $0)
-        }
+        let transitions = HomeViewController.Transitions(
+            openWebPage: { [weak self] in self?.showWebPageScreen() }
+        )
+        let viewController = HomeAssembly.makeHomeScreen(transitions: transitions, resolver: self)
         
         pushViewController(viewController)
     }
     
-    func showWebPageScreen(config: WebPageConfig) {
-        let viewController = HomeAssembly.makeWebPageScreen(config: config)
-        
-        viewController.transitions.close = { [weak self] in
-            self?.popViewController(animated: true)
-        }
+    func showWebPageScreen() {
+        let transitions = WebPageViewController.Transitions(
+            close: { [weak self] in self?.popViewController(animated: true) }
+        )
+        let viewController = HomeAssembly.makeWebPageScreen(transitions: transitions, resolver: self)
         
         pushViewController(viewController, animated: true)
     }

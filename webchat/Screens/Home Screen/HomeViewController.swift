@@ -8,12 +8,23 @@
 import UIKit
 
 final class HomeViewController: ContentViewController<HomeView> {
-    
     struct Transitions {
-        var openWebPage: ((WebPageConfig) -> Void)?
+        let openWebPage: () -> Void
     }
     
-    var transitions = Transitions()
+    private let transitions: Transitions
+    private let webPageInteractor: WebPageInteractor
+    
+    init(transitions: Transitions, webPageInteractor: WebPageInteractor) {
+        self.transitions = transitions
+        self.webPageInteractor = webPageInteractor
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +65,7 @@ private extension HomeViewController {
         alertController.addAction(UIAlertAction(title: Texts.Action.open, style: .default, handler: { [weak self] _ in
             guard let textFields = alertController.textFields,
                   textFields.count >= textFieldsPlaceholders.count else {
-                self?.showErrorAlert(error: OpenWebPageError.incorrectTextFieldsSetup)
+                self?.showErrorAlert(error: WebPageError.incorrectTextFieldsSetup)
                 return
             }
             
@@ -63,24 +74,26 @@ private extension HomeViewController {
             let injectedScriptTextField = textFields[2]
             
             guard urlTextField.text?.hasPrefix(Constants.httpsPrefix) == true else {
-                self?.showErrorAlert(error: OpenWebPageError.httpsInURLMissing)
+                self?.showErrorAlert(error: WebPageError.httpsInURLMissing)
                 return
             }
             
             guard let url = URL(string: urlTextField.text ?? "") else {
-                self?.showErrorAlert(error: OpenWebPageError.wrongURL)
+                self?.showErrorAlert(error: WebPageError.wrongURL)
                 return
             }
             
             guard let handlerName = handlerNameTextField.text,
                   !handlerName.isEmpty else {
-                self?.showErrorAlert(error: OpenWebPageError.emptyHandlerName)
+                self?.showErrorAlert(error: WebPageError.emptyHandlerName)
                 return
             }
             
-            self?.transitions.openWebPage?(WebPageConfig(url: url,
-                                                         handlerName: handlerName,
-                                                         jsScript: injectedScriptTextField.text))
+            let config = WebPageConfig(url: url,
+                                       handlerName: handlerName,
+                                       jsScript: injectedScriptTextField.text)
+            self?.webPageInteractor.config = config
+            self?.transitions.openWebPage()
         }))
         
         alertController.addAction(UIAlertAction(title: L10n.Alert.Action.cancel,
@@ -92,13 +105,15 @@ private extension HomeViewController {
     func openLocalPage() {
         guard let url = Bundle.main.url(forResource: Constants.localPage.name,
                                         withExtension: Constants.localPage.extension) else {
-            showErrorAlert(error: OpenWebPageError.localPageNotFound)
+            showErrorAlert(error: WebPageError.localPageNotFound)
             return
         }
         
-        transitions.openWebPage?(WebPageConfig(url: url,
-                                               handlerName: Constants.localPageHandlerName,
-                                               jsScript: nil))
+        let config = WebPageConfig(url: url,
+                                   handlerName: Constants.localPageHandlerName,
+                                   jsScript: nil)
+        webPageInteractor.config = config
+        transitions.openWebPage()
     }
 }
 

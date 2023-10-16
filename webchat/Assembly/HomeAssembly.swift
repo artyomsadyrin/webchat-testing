@@ -7,7 +7,7 @@
 
 import Model
 
-final class HomeAssembly { }
+enum HomeAssembly { }
 
 extension HomeAssembly {
     static func makeRootCoordinator() -> RootCoordinator {
@@ -20,11 +20,11 @@ extension HomeAssembly {
 }
 
 extension HomeAssembly {
-    static func makeWebPageScreen(config: WebPageConfig) -> WebPageViewController {
-        WebPageViewController(config: config)
+    static func makeWebPageScreen(transitions: WebPageViewController.Transitions, resolver: Resolver) -> WebPageViewController {
+        WebPageViewController(transitions: transitions, webPageInteractor: InteractorsAssembly.webPageInteractor(resolver: resolver))
     }
     
-    static func makeHomeScreen() -> HomeViewController {
-        HomeViewController()
+    static func makeHomeScreen(transitions: HomeViewController.Transitions, resolver: Resolver) -> HomeViewController {
+        HomeViewController(transitions: transitions, webPageInteractor: InteractorsAssembly.webPageInteractor(resolver: resolver))
     }
 }

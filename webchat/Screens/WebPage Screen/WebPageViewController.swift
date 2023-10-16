@@ -9,17 +9,17 @@ import UIKit
 import WebKit
 
 class WebPageViewController: ContentViewController<WebPageView> {
-    
     struct Transitions {
-        var close: (() -> Void)?
+        let close: () -> Void
     }
     
-    var transitions = Transitions()
+    private let transitions: Transitions
+    private let webPageInteractor: WebPageInteractor
     
-    private let webPageConfig: WebPageConfig
+    init(transitions: Transitions, webPageInteractor: WebPageInteractor) {
+        self.transitions = transitions
+        self.webPageInteractor = webPageInteractor
         
-    init(config: WebPageConfig) {
-        self.webPageConfig = config
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -43,7 +43,9 @@ class WebPageViewController: ContentViewController<WebPageView> {
             webView.uiDelegate = self
         }
         
-        load(url: webPageConfig.url)
+        if let url = webPageConfig?.url {
+            load(url: url)
+        }
     }
 }
 
@@ -61,11 +63,13 @@ extension WebPageViewController: WKNavigationDelegate {
 
 extension WebPageViewController: WKUIDelegate {
     func webViewDidClose(_ webView: WKWebView) {
-        transitions.close?()
+        transitions.close()
     }
 }
 
 private extension WebPageViewController {
+    var webPageConfig: WebPageConfig? { webPageInteractor.config }
+    
     func load(url: URL) {
         contentView.setupProgressView(isHidden: false, progress: 0)
         contentView.load(url: url)
@@ -112,14 +116,16 @@ private extension WebPageViewController {
         let configuration = WKWebViewConfiguration()
         let userController = WKUserContentController()
         
-        userController.add(self, name: webPageConfig.handlerName)
-        
-        if let jsScript = webPageConfig.jsScript {
-            let userScript = WKUserScript(source: jsScript,
-                                      injectionTime: .atDocumentEnd,
-                                      forMainFrameOnly: false)
-        
-            userController.addUserScript(userScript)
+        if let webPageConfig {
+            userController.add(self, name: webPageConfig.handlerName)
+            
+            if let jsScript = webPageConfig.jsScript {
+                let userScript = WKUserScript(source: jsScript,
+                                              injectionTime: .atDocumentEnd,
+                                              forMainFrameOnly: false)
+                
+                userController.addUserScript(userScript)
+            }
         }
         
         configuration.userContentController = userController
